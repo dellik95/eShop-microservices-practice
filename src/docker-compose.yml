@@ -1,0 +1,123 @@
+version: '3.4'
+
+services:
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalog.api
+    container_name: catalog.api
+    build:
+      context: ./Services/Catalog/Catalog.API
+      dockerfile: Dockerfile
+    ports:
+      - "7024:7024"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:7024
+      - "MongoSettings:ConnectionsString=mongodb://catalog.db:27017"
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+    depends_on:
+      - catalog.db
+  catalog.db:
+    image: mongo
+    container_name: catalog.db
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+  mongo-client:
+    image: mongoclient/mongoclient
+    ports:
+      - "3000:3000"
+    depends_on:
+      - catalog.db
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basket.api
+    container_name: basket.api
+    build:
+      context: ./Services/Basket/Basket.API
+      dockerfile: Dockerfile
+    depends_on:
+      - redis.basket
+      - discount.grpc
+    ports:
+      - "7025:7025"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:7025
+      - "CacheSettings:ConnectionsString=redis.basket:6379"
+      - "DiscountGrpcSettings:DiscountUrl=http://discount.grpc:7026"
+  redis.basket:
+    container_name: redis.basket
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - cache:/data
+  #discount.api:
+  #  image: ${DOCKER_REGISTRY-}discount.api
+  #  container_name: discount.api
+  #  build:
+  #    context: ./Services/Discount/Discount.API
+  #    dockerfile: Dockerfile
+  #  depends_on:
+  #    - postgres.discount
+  #  ports:
+  #    - "7026:7026"
+  #  environment:
+  #    - ASPNETCORE_ENVIRONMENT=Development
+  #    - ASPNETCORE_URLS=http://+:7026
+  #    - "PostgresSettings:ConnectionString=Server=postgres.discount;Port=5432;Database=discountDb; User Id = admin;Password=admin1234"
+  discount.grpc:
+    image: ${DOCKER_REGISTRY-}discount.grpc
+    container_name: discount.grpc
+    build:
+      context: ./Services/Discount/Discount.Grpc
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres.discount
+    ports:
+      - "7026:7026"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:7026
+      - "PostgresSettings:ConnectionString=Server=postgres.discount;Port=5432;Database=discountDb; User Id = admin;Password=admin1234"
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    ports:
+      - "9001:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin@admin.com
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+  postgres.discount:
+    image: postgres
+    container_name: postgres.discount
+    restart: always
+    environment:
+      POSTGRES_DB: "discountDb"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin1234"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  portainer:
+    restart: always
+    image: portainer/portainer-ce
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  mongo_data:
+  cache:
+  portainer_data:
+  postgres_data:
+  pgadmin_data:
