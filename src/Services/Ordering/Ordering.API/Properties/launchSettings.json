@@ -1,10 +1,10 @@
 ﻿{
   "profiles": {
-    "Discount.Grpc": {
+    "Ordering.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "applicationUrl": "http://localhost:7026",
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:7027",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
