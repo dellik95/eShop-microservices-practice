@@ -1,7 +1,10 @@
+using Ordering.Application;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddApplicationsLayer();
 var app = builder.Build();
 
 

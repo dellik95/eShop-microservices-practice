@@ -20,7 +20,7 @@ public interface IAsyncRepository<T> where T : EntityBase
 		List<Expression<Func<T, object>>> includes = null,
 		bool trackChanges = false);
 
-	Task<T> FindById(int id);
+	Task<T?> FindById(int id);
 	Task<T> AddAsync(T entity);
 	Task UpdateAsync(T entity);
 	Task DeleteAsync(T entity);
