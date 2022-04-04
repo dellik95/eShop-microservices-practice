@@ -5,7 +5,7 @@ using Ordering.Domain.Common;
 
 namespace Ordering.Infrastructure.Repositories;
 
-public abstract class RepositoryBase<TSource> : IAsyncRepository<TSource> where TSource : EntityBase
+public class RepositoryBase<TSource> : IAsyncRepository<TSource> where TSource : EntityBase
 {
 	private readonly DbContext _context;
 

@@ -115,6 +115,30 @@ services:
     volumes:
       - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
+  ordering.api:
+    build:
+      context: ./Services/Ordering
+      dockerfile: Dockerfile
+    image: ${DOCKER_REGISTRY-}ordering.api
+    container_name: ordering.api
+    ports:
+      - "7027:7027"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:7027
+      - "ConnectionStrings:OrderingConnectionString=Server=ordering.sql; Initial Catalog=OrderDb;User Id=sa; Password=Admin12345678;TrustServerCertificate=true"
+      - "EmailSettings:ApiKey"
+      - "EmailSettings:FromAddress=test@test.com"
+      - "EmailSettings:FromName=test@test.com"
+  ordering.sql:
+    image: mcr.microsoft.com/mssql/server
+    container_name: ordering.sql
+    restart: always
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Admin12345678
+    ports:
+      - "1434:1433"
 volumes:
   mongo_data:
   cache:

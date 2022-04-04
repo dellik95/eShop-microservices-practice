@@ -28,14 +28,14 @@ public class OrderController : ControllerBase
 	}
 
 
-	[HttpPost(Name = "Checkout")]
+	[HttpPost("checkout",Name = "Checkout")]
 	public async Task<IActionResult> CheckoutOrder([FromBody] CheckoutOrderCommand command)
 	{
 		var result = await _sender.Send(command);
 		return Ok(result);
 	}
 
-	[HttpPost(Name = "UpdateOrder")]
+	[HttpPost("update",Name = "UpdateOrder")]
 	public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
 	{
 		await _sender.Send(command);

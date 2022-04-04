@@ -9,6 +9,16 @@ public class OrderContext : DbContext
 {
 	public OrderContext(DbContextOptions<OrderContext> options) : base(options)
 	{
+		MigrateWhenNeed();
+	}
+
+	private void MigrateWhenNeed()
+	{
+		var pendingMigrations = Database.GetPendingMigrations();
+		if (pendingMigrations.Any())
+		{
+			Database.Migrate();
+		}
 	}
 
 	public DbSet<Order> Orders { get; set; }

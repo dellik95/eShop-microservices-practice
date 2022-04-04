@@ -1,6 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ordering.Application.Contracts.Infrastructure;
 using Ordering.Application.Contracts.Persistence;
+using Ordering.Application.Models;
+using Ordering.Infrastructure.Mail;
 using Ordering.Infrastructure.Persistence;
 using Ordering.Infrastructure.Repositories;
 
@@ -8,9 +12,17 @@ namespace Ordering.Infrastructure;
 
 public static class DependencyInjection
 {
-	public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
+	public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services,
+		IConfiguration configuration)
 	{
-		services.AddDbContext<OrderContext>(o => { o.UseSqlServer("Connection string"); });
+		services.Configure<EmailSettings>(c => configuration.GetSection(nameof(EmailSettings)));
+		services.AddScoped<IEmailService, EmailService>();
+
+		services.AddDbContext<OrderContext>(o =>
+			o.UseSqlServer(configuration.GetConnectionString("OrderingConnectionString")));
+
+
+		services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
 		services.AddScoped<IOrderRepository, OrderRepository>();
 
 		return services;
