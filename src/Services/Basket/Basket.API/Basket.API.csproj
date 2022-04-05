@@ -6,15 +6,22 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Google.Protobuf" Version="3.20.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.44.0" />
     <PackageReference Include="Grpc.AspNetCore.Server.ClientFactory" Version="2.44.0" />
     <PackageReference Include="Grpc.Tools" Version="2.45.0" PrivateAssets="All" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.0-preview.2.22153.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
   <ItemGroup>
     <Protobuf Include="Protos\discount.proto" GrpcServices="Client" AdditionalImportDirs="Protos" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\EventBus.Messages\EventBus.Messages.csproj" />
   </ItemGroup>
 </Project>
