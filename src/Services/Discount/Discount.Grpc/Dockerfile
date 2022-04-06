@@ -3,10 +3,10 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Discount.Grpc.csproj", "Discount.Grpc/"]
-RUN dotnet restore "Discount.Grpc/Discount.Grpc.csproj"
-COPY . ./Discount.Grpc
-WORKDIR "/src/Discount.Grpc"
+COPY ["Services/Discount/Discount.Grpc/Discount.Grpc.csproj", "Services/Discount/Discount.Grpc/"]
+RUN dotnet restore "Services/Discount/Discount.Grpc/Discount.Grpc.csproj"
+COPY . .
+WORKDIR "/src/Services/Discount/Discount.Grpc"
 RUN dotnet build "Discount.Grpc.csproj" -c Release -o /app/build
 
 FROM build AS publish

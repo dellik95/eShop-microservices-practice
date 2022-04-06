@@ -10,12 +10,12 @@
 			"dockerBuild": {
 				"tag": "src:dev",
 				"target": "base",
-				"dockerfile": "${workspaceFolder}/Services/Basket/Basket.API/Dockerfile",
+				"dockerfile": "${workspaceFolder}/Services/Ordering/Ordering.API/Dockerfile",
 				"context": "${workspaceFolder}",
 				"pull": true
 			},
 			"netCore": {
-				"appProject": "${workspaceFolder}/Services/Basket/Basket.API/Basket.API.csproj"
+				"appProject": "${workspaceFolder}/Services/Ordering/Ordering.API/Ordering.API.csproj"
 			}
 		},
 		{
@@ -26,12 +26,12 @@
 			],
 			"dockerBuild": {
 				"tag": "src:latest",
-				"dockerfile": "${workspaceFolder}/Services/Basket/Basket.API/Dockerfile",
+				"dockerfile": "${workspaceFolder}/Services/Ordering/Ordering.API/Dockerfile",
 				"context": "${workspaceFolder}",
 				"pull": true
 			},
 			"netCore": {
-				"appProject": "${workspaceFolder}/Services/Basket/Basket.API/Basket.API.csproj"
+				"appProject": "${workspaceFolder}/Services/Ordering/Ordering.API/Ordering.API.csproj"
 			}
 		},
 		{
@@ -42,7 +42,7 @@
 			],
 			"dockerRun": {},
 			"netCore": {
-				"appProject": "${workspaceFolder}/Services/Basket/Basket.API/Basket.API.csproj",
+				"appProject": "${workspaceFolder}/Services/Ordering/Ordering.API/Ordering.API.csproj",
 				"enableDebugging": true
 			}
 		},
@@ -54,7 +54,7 @@
 			],
 			"dockerRun": {},
 			"netCore": {
-				"appProject": "${workspaceFolder}/Services/Basket/Basket.API/Basket.API.csproj"
+				"appProject": "${workspaceFolder}/Services/Ordering/Ordering.API/Ordering.API.csproj"
 			}
 		},
 		{
