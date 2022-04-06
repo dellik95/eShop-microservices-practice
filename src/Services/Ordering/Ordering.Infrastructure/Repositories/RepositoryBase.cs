@@ -2,14 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Ordering.Application.Contracts.Persistence;
 using Ordering.Domain.Common;
+using Ordering.Infrastructure.Persistence;
 
 namespace Ordering.Infrastructure.Repositories;
 
 public class RepositoryBase<TSource> : IAsyncRepository<TSource> where TSource : EntityBase
 {
-	private readonly DbContext _context;
+	private readonly OrderContext _context;
 
-	protected RepositoryBase(DbContext context)
+	protected RepositoryBase(OrderContext context)
 	{
 		_context = context;
 	}
