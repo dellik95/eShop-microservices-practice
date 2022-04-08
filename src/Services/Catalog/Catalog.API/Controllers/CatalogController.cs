@@ -36,7 +36,7 @@ public class CatalogController : ControllerBase
 	}
 
 
-	[HttpGet("{category}", Name = nameof(GetProductByCategory))]
+	[HttpGet("[action]/{category}", Name = nameof(GetProductByCategory))]
 	public async Task<IActionResult> GetProductByCategory(string category)
 	{
 		var products = await _repository.GetProductsByConditions(p => p.Category == category);

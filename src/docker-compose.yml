@@ -55,20 +55,20 @@ services:
       - "6379:6379"
     volumes:
       - cache:/data
-  #discount.api:
-  #  image: ${DOCKER_REGISTRY-}discount.api
-  #  container_name: discount.api
-  #  build:
-  #    context: ./Services/Discount/Discount.API
-  #    dockerfile: Dockerfile
-  #  depends_on:
-  #    - postgres.discount
-  #  ports:
-  #    - "7026:7026"
-  #  environment:
-  #    - ASPNETCORE_ENVIRONMENT=Development
-  #    - ASPNETCORE_URLS=http://+:7026
-  #    - "PostgresSettings:ConnectionString=Server=postgres.discount;Port=5432;Database=discountDb; User Id = admin;Password=admin1234"
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discount.api
+    container_name: discount.api
+    build:
+      context: ./Services/Discount/Discount.API
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres.discount
+    ports:
+      - "7023:7023"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:7023
+      - "PostgresSettings:ConnectionString=Server=postgres.discount;Port=5432;Database=discountDb; User Id = admin;Password=admin1234"
   discount.grpc:
     image: ${DOCKER_REGISTRY-}discount.grpc
     container_name: discount.grpc
@@ -149,6 +149,21 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  getway.ocelot:
+    container_name: getway.ocelot
+    build:
+      context: .
+      dockerfile: ApiGateways/ApiGateway.Ocelot/Dockerfile
+    restart: always
+    depends_on:
+      - basket.api
+      - catalog.api
+      - ordering.api
+      - discount.api
+    ports:
+      - "7028:7028"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
 volumes:
   mongo_data:
   cache:

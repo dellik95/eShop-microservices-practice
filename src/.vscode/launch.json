@@ -6,7 +6,7 @@
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "netCore": {
-                "appProject": "${workspaceFolder}/Services/Ordering/Ordering.API/Ordering.API.csproj"
+                "appProject": "${workspaceFolder}/ApiGateways/ApiGateway.Ocelot/ApiGateway.Ocelot.csproj"
             }
         },
         {
