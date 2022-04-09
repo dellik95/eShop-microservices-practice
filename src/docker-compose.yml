@@ -164,6 +164,25 @@ services:
       - "7028:7028"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+  shopping.aggregator:
+    build:
+      context: .
+      dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
+    container_name: shopping.aggregator
+    restart: always
+    ports:
+      - "7029:7029"
+    depends_on:
+      - basket.api
+      - catalog.api
+      - ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:BasketUrl=http://basket.api:7025"
+      - "ApiSettings:CatalogUrl=http://catalog.api:7024"
+      - "ApiSettings:OrderingUrl=http://ordering.api:7027"
+
+
 volumes:
   mongo_data:
   cache:

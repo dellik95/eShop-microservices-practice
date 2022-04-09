@@ -10,12 +10,12 @@
 			"dockerBuild": {
 				"tag": "src:dev",
 				"target": "base",
-				"dockerfile": "${workspaceFolder}/ApiGateways/ApiGateway.Ocelot/Dockerfile",
+				"dockerfile": "${workspaceFolder}/ApiGateways/Shopping.Aggregator/Dockerfile",
 				"context": "${workspaceFolder}",
 				"pull": true
 			},
 			"netCore": {
-				"appProject": "${workspaceFolder}/ApiGateways/ApiGateway.Ocelot/ApiGateway.Ocelot.csproj"
+				"appProject": "${workspaceFolder}/ApiGateways/Shopping.Aggregator/Shopping.Aggregator.csproj"
 			}
 		},
 		{
@@ -26,12 +26,12 @@
 			],
 			"dockerBuild": {
 				"tag": "src:latest",
-				"dockerfile": "${workspaceFolder}/ApiGateways/ApiGateway.Ocelot/Dockerfile",
+				"dockerfile": "${workspaceFolder}/ApiGateways/Shopping.Aggregator/Dockerfile",
 				"context": "${workspaceFolder}",
 				"pull": true
 			},
 			"netCore": {
-				"appProject": "${workspaceFolder}/ApiGateways/ApiGateway.Ocelot/ApiGateway.Ocelot.csproj"
+				"appProject": "${workspaceFolder}/ApiGateways/Shopping.Aggregator/Shopping.Aggregator.csproj"
 			}
 		},
 		{
@@ -42,7 +42,7 @@
 			],
 			"dockerRun": {},
 			"netCore": {
-				"appProject": "${workspaceFolder}/ApiGateways/ApiGateway.Ocelot/ApiGateway.Ocelot.csproj",
+				"appProject": "${workspaceFolder}/ApiGateways/Shopping.Aggregator/Shopping.Aggregator.csproj",
 				"enableDebugging": true
 			}
 		},
@@ -54,7 +54,7 @@
 			],
 			"dockerRun": {},
 			"netCore": {
-				"appProject": "${workspaceFolder}/ApiGateways/ApiGateway.Ocelot/ApiGateway.Ocelot.csproj"
+				"appProject": "${workspaceFolder}/ApiGateways/Shopping.Aggregator/Shopping.Aggregator.csproj"
 			}
 		},
 		{
